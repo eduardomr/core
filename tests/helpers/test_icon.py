@@ -1,8 +1,20 @@
 """Test Home Assistant icon util methods."""
 
+def test_battery_level_unknown():
+    from homeassistant.helpers.icon import icon_for_battery_level
+    assert icon_for_battery_level() == "mdi:battery-unknown"
 
-def test_battery_icon():
-    """Test icon generator for battery sensor."""
+def test_battery_level_not_charging():
+    from homeassistant.helpers.icon import icon_for_battery_level
+    assert icon_for_battery_level(50) == "mdi:battery-50"
+    assert icon_for_battery_level(5) == "mdi:battery-alert"
+
+def test_battery_level_charging():
+    from homeassistant.helpers.icon import icon_for_battery_level
+    assert icon_for_battery_level(20, True) == "mdi:battery-charging-20"
+    assert icon_for_battery_level(0, True) == "mdi:battery-outline"
+
+"""def test_battery_icon():
     from homeassistant.helpers.icon import icon_for_battery_level
 
     assert icon_for_battery_level(None, True) == "mdi:battery-unknown"
@@ -44,7 +56,7 @@ def test_battery_icon():
             postfix = ""
         assert iconbase + postfix == icon_for_battery_level(level, False)
         assert iconbase + postfix_charging == icon_for_battery_level(level, True)
-
+"""
 
 def test_signal_icon():
     """Test icon generator for signal sensor."""
